@@ -1,0 +1,87 @@
+name: Python CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint & Format (Ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Ruff
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade ruff==0.14.14
+
+      - name: Ruff lint
+        run: ruff check . --config pyproject.toml
+
+      - name: Ruff format check
+        run: ruff format --check . --config pyproject.toml
+
+  test:
+    name: Test Suite (Python 3.12)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install package and test tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[test-all]"
+
+      - name: Run tests with coverage
+        run: |
+          pytest tests/ --cov=axiompy --cov-report=xml --cov-report=term
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          flags: python-3.12
+          fail_ci_if_error: false
+
+      - name: Coverage threshold check
+        run: coverage report --fail-under=80
+
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install project and security tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install bandit pip-audit
+          pip install -e ".[test-all]"
+
+      - name: Run Bandit
+        run: bandit -r axiompy/ -ll
+
+      - name: Run pip-audit
+        run: pip-audit

@@ -1,0 +1,108 @@
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "axiompy-data"
+version = "2.0.0"
+description = "Big-data and data-engineering utilities for AxiomPy (streaming, Arrow, pipelines)"
+readme = "README.md"
+license = "MIT"
+authors = ["Jorge Varona <varonusmaximus@users.noreply.github.com>"]
+keywords = ["data", "pandas", "pyspark", "streaming", "arrow", "axiompy"]
+packages = [{ include = "axiompy" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+axiompy = ">=2.0.0,<3.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.4.0"
+pytest-cov = ">=4.1.0"
+
+[project]
+name = "axiompy-data"
+version = "2.0.0"
+description = "Big-data and data-engineering utilities for AxiomPy"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Jorge Varona", email = "varonusmaximus@users.noreply.github.com" }]
+dependencies = ["axiompy>=2.0.0,<3.0.0"]
+
+[project.urls]
+Repository = "https://github.com/varonusmaximus/axiompy-data"
+Documentation = "https://github.com/varonusmaximus/axiompy-data#readme"
+
+[project.optional-dependencies]
+data = ["pandas>=1.5.0"]
+spark = ["pyspark>=3.3.0"]
+compression = [
+    "zstandard>=0.21.0",
+    "lz4>=4.3.0",
+    "python-snappy>=0.6.1",
+]
+polars = ["polars>=0.19.0"]
+arrow-duckdb = ["duckdb>=0.9.0", "pyarrow>=12.0.0"]
+arrow-snowflake = ["adbc-driver-snowflake>=0.8.0", "pyarrow>=12.0.0"]
+arrow-postgres = ["adbc-driver-postgresql>=0.8.0", "pyarrow>=12.0.0"]
+arrow-all = [
+    "duckdb>=0.9.0",
+    "pyarrow>=12.0.0",
+    "adbc-driver-snowflake>=0.8.0",
+    "adbc-driver-postgresql>=0.8.0",
+]
+data-all = [
+    "pandas>=1.5.0",
+    "pyspark>=3.3.0",
+    "zstandard>=0.21.0",
+    "lz4>=4.3.0",
+    "python-snappy>=0.6.1",
+    "pyarrow>=12.0.0",
+    "openpyxl>=3.1.0",
+    "duckdb>=0.9.0",
+]
+streaming-kafka = ["kafka-python>=2.0.0"]
+streaming-kinesis = ["boto3>=1.26.0"]
+streaming-redis = ["redis>=4.5.0"]
+streaming-rabbitmq = ["pika>=1.3.0"]
+streaming-all = [
+    "kafka-python>=2.0.0",
+    "boto3>=1.26.0",
+    "redis>=4.5.0",
+    "pika>=1.3.0",
+]
+test-all = [
+    "pandas>=1.5.0",
+    "pyspark>=3.3.0",
+    "pyarrow>=12.0.0",
+    "openpyxl>=3.1.0",
+    "zstandard>=0.21.0",
+    "lz4>=4.3.0",
+    "python-snappy>=0.6.1",
+    "duckdb>=0.9.0",
+    "adbc-driver-snowflake>=0.8.0",
+    "adbc-driver-postgresql>=0.8.0",
+    "boto3>=1.26.0",
+    "moto>=4.0.0",
+    "psycopg2-binary>=2.9.0",
+    "mysql-connector-python>=8.0.0",
+    "google-cloud-storage>=2.10.0",
+    "azure-storage-blob>=12.19.0",
+    "kafka-python>=2.0.0",
+    "redis>=4.5.0",
+    "pika>=1.3.0",
+    "tqdm>=4.65.0",
+    "pyyaml>=6.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["axiompy"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
