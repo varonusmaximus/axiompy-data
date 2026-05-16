@@ -37,6 +37,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Java (PySpark local tests)
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
@@ -81,7 +87,7 @@ jobs:
           pip install -e ".[test-all]"
 
       - name: Run Bandit
-        run: bandit -r axiompy/ -ll
+        run: bandit -c pyproject.toml -r axiompy/ -ll
 
       - name: Run pip-audit
         run: pip-audit

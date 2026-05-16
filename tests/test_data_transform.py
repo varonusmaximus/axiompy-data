@@ -7,7 +7,7 @@ Tests DataTransformer implementations for both Pandas and Spark engines.
 import pandas as pd
 import pytest
 
-from axiompy.data.transform import (
+from axiompy.data.processing.transform import (
     DataTransformer,
     DataTransformerFactory,
     PandasDataTransformer,

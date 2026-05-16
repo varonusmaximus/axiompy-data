@@ -11,23 +11,16 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from axiompy.data.streaming.consumer import (
-    KafkaStreamConsumer,
-    KinesisStreamConsumer,
-    RabbitMQStreamConsumer,
-    RedisStreamConsumer,
-    StreamConsumerFactory,
-)
+from axiompy.data.streaming.adapters.kafka import KafkaStreamConsumer, KafkaStreamProducer
+from axiompy.data.streaming.adapters.kinesis import KinesisStreamConsumer, KinesisStreamProducer
+from axiompy.data.streaming.adapters.rabbitmq import RabbitMQStreamConsumer, RabbitMQStreamProducer
+from axiompy.data.streaming.adapters.redis import RedisStreamConsumer, RedisStreamProducer
+from axiompy.data.streaming.consumer import StreamConsumer
+from axiompy.data.streaming.factory import StreamConsumerFactory, StreamProducerFactory
 from axiompy.data.streaming.handler import (
     StreamHandler,
 )
-from axiompy.data.streaming.producer import (
-    KafkaStreamProducer,
-    KinesisStreamProducer,
-    RabbitMQStreamProducer,
-    RedisStreamProducer,
-    StreamProducerFactory,
-)
+from axiompy.data.streaming.producer import StreamProducer
 from axiompy.data.streaming.types import (
     ConsumerStats,
     StreamEngine,

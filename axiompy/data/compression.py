@@ -10,8 +10,9 @@ import gzip
 from pathlib import Path
 from typing import Optional, Union
 
-from axiompy.data.types import CompressionFormat
 from axiompy.loggers import LoggerFactory
+
+from axiompy.data.types import CompressionFormat
 
 logger = LoggerFactory.create_logger(__name__)
 

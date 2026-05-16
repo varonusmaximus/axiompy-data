@@ -1,5 +1,5 @@
 """
-Unit tests for axiompy.data.quality module.
+Unit tests for axiompy.data.processing.quality module.
 
 Tests DataProfiler implementations for both Pandas and Spark engines.
 """
@@ -7,7 +7,7 @@ Tests DataProfiler implementations for both Pandas and Spark engines.
 import pandas as pd
 import pytest
 
-from axiompy.data.quality import (
+from axiompy.data.processing.quality import (
     DataProfiler,
     DataProfilerFactory,
     PandasDataProfiler,

@@ -287,7 +287,7 @@ class TestSparkDataPartitioner:
     def test_spark_partitioner_creation(self):
         """Test creating Spark partitioner."""
         pytest.importorskip("pyspark")
-        from axiompy.data.partition import SparkDataPartitioner
+        from axiompy.data.processing.partition import SparkDataPartitioner
         from axiompy.data.types import DataEngine, PartitionStrategy
 
         partitioner = SparkDataPartitioner(
@@ -303,7 +303,7 @@ class TestSparkDataPartitioner:
         pytest.importorskip("pyarrow")
         from pyspark.sql import SparkSession
 
-        from axiompy.data.partition import SparkDataPartitioner
+        from axiompy.data.processing.partition import SparkDataPartitioner
         from axiompy.data.types import PartitionStrategy
 
         spark = SparkSession.builder.master("local").getOrCreate()
@@ -335,7 +335,7 @@ class TestSparkDataPartitioner:
         pytest.importorskip("pyarrow")
         from pyspark.sql import SparkSession
 
-        from axiompy.data.partition import SparkDataPartitioner
+        from axiompy.data.processing.partition import SparkDataPartitioner
         from axiompy.data.types import PartitionStrategy
 
         spark = SparkSession.builder.master("local").getOrCreate()
@@ -369,7 +369,7 @@ class TestSparkDataPartitioner:
         pytest.importorskip("pyarrow")
         from pyspark.sql import SparkSession
 
-        from axiompy.data.partition import SparkDataPartitioner
+        from axiompy.data.processing.partition import SparkDataPartitioner
         from axiompy.data.types import PartitionStrategy
 
         spark = SparkSession.builder.master("local").getOrCreate()

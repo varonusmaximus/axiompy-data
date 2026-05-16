@@ -7,7 +7,7 @@ Tests ChangeDetector implementations for detecting data changes.
 import pandas as pd
 import pytest
 
-from axiompy.data.cdc import (
+from axiompy.data.processing.cdc import (
     ChangeDetectorFactory,
     PandasChangeDetector,
 )

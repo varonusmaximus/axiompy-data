@@ -1,0 +1,23 @@
+---
+description: Require branch-first workflow before any repo changes
+alwaysApply: true
+---
+
+# Branch-First Workflow (Required)
+
+- Do not edit files, run mutating commands, or create commits on `main`.
+- Before any code or docs change, create/switch to a feature branch.
+- Preferred naming: `<owner>-<topic>` (for example `varona-semantic-refactoring`).
+- If currently on `main`, pause and create a branch first.
+- If user asks for changes without a branch, remind and propose creating one.
+
+## Required pre-edit check
+
+1. Confirm current branch is not `main`.
+2. If it is `main`, run:
+
+```bash
+git checkout -b <feature-branch>
+```
+
+3. Proceed only after branch switch succeeds.

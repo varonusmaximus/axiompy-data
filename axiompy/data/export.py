@@ -8,8 +8,9 @@ Excel, etc.) with support for multiple engines.
 from io import BytesIO
 from typing import Any, Dict, Optional
 
-from axiompy.data.types import DataEngine, DataFormat
 from axiompy.loggers import LoggerFactory
+
+from axiompy.data.types import DataEngine, DataFormat
 
 logger = LoggerFactory.create_logger(__name__)
 

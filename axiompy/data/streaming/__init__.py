@@ -15,25 +15,17 @@ Features:
 - Batch operations
 """
 
-from axiompy.data.streaming.consumer import (
-    KafkaStreamConsumer,
-    KinesisStreamConsumer,
-    RabbitMQStreamConsumer,
-    RedisStreamConsumer,
-    StreamConsumer,
-    StreamConsumerFactory,
-)
+from axiompy.data.streaming.adapters.kafka import KafkaStreamConsumer, KafkaStreamProducer
+from axiompy.data.streaming.adapters.kinesis import KinesisStreamConsumer, KinesisStreamProducer
+from axiompy.data.streaming.adapters.rabbitmq import RabbitMQStreamConsumer, RabbitMQStreamProducer
+from axiompy.data.streaming.adapters.redis import RedisStreamConsumer, RedisStreamProducer
+from axiompy.data.streaming.consumer import StreamConsumer
+from axiompy.data.streaming.factory import StreamConsumerFactory, StreamProducerFactory
 from axiompy.data.streaming.handler import (
     StreamHandler,
 )
-from axiompy.data.streaming.producer import (
-    KafkaStreamProducer,
-    KinesisStreamProducer,
-    RabbitMQStreamProducer,
-    RedisStreamProducer,
-    StreamProducer,
-    StreamProducerFactory,
-)
+from axiompy.data.streaming.ports import StreamConsumePort, StreamPublishPort
+from axiompy.data.streaming.producer import StreamProducer
 from axiompy.data.streaming.types import (
     ConsumerStats,
     ProducerResult,
@@ -65,4 +57,7 @@ __all__ = [
     "RabbitMQStreamConsumer",
     # Handlers
     "StreamHandler",
+    # Ports (hexagonal)
+    "StreamPublishPort",
+    "StreamConsumePort",
 ]

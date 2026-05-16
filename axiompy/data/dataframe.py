@@ -9,9 +9,10 @@ import contextlib
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Union
 
-from axiompy.data.types import DataEngine
 from axiompy.io import Database
 from axiompy.loggers import LoggerFactory
+
+from axiompy.data.types import DataEngine
 
 logger = LoggerFactory.create_logger(__name__)
 

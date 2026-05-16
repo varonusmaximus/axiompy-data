@@ -20,7 +20,7 @@ repos:
     rev: 1.7.5
     hooks:
       - id: bandit
-        args: [-ll]
+        args: [-c, pyproject.toml, -ll]
         files: ^axiompy/
         stages: [commit]
 

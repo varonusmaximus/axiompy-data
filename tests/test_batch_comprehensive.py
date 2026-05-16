@@ -8,7 +8,7 @@ import time
 
 import pytest
 
-from axiompy.data.batch import (
+from axiompy.data.processing.batch import (
     BatchProcessorFactory,
     ListBatchProcessor,
     PandasBatchProcessor,

@@ -14,10 +14,10 @@ pytest.importorskip("pyspark")
 from pyspark.sql import SparkSession
 from pyspark.sql.types import DoubleType, IntegerType, StringType, StructField, StructType
 
-from axiompy.data.cdc import ChangeDetectorFactory, SparkChangeDetector
-from axiompy.data.lineage import LineageTrackerFactory, SparkLineageTracker
-from axiompy.data.quality import DataProfilerFactory, SparkDataProfiler
-from axiompy.data.transform import DataTransformerFactory, SparkDataTransformer
+from axiompy.data.processing.cdc import ChangeDetectorFactory, SparkChangeDetector
+from axiompy.data.processing.lineage import LineageTrackerFactory, SparkLineageTracker
+from axiompy.data.processing.quality import DataProfilerFactory, SparkDataProfiler
+from axiompy.data.processing.transform import DataTransformerFactory, SparkDataTransformer
 from axiompy.data.types import DataEngine, DataExpectation
 
 # ============================================================================
