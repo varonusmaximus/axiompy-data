@@ -29,7 +29,7 @@ Repository: [https://github.com/varonusmaximus/axiompy-data](https://github.com/
 If **`axiompy` is not yet on PyPI**, install it from Git before installing this package:
 
 ```bash
-pip install "git+https://github.com/varonusmaximus/axiompy.git"
+pip install "git+https://github.com/varonusmaximus/axiompy.git@main[fastapi]"
 pip install -e ".[dev]"
 ```
 
