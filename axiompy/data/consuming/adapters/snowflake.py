@@ -67,8 +67,7 @@ class SnowflakeClient(Client):
                 import adbc_driver_snowflake.dbapi as snowflake_dbapi
             except ImportError as e:
                 raise ArrowConnectionError(
-                    "adbc-driver-snowflake not installed. "
-                    "Run: pip install adbc-driver-snowflake"
+                    "adbc-driver-snowflake not installed. Run: pip install adbc-driver-snowflake"
                 ) from e
 
             logger.info("Connecting to Snowflake: %s", self.settings.account)

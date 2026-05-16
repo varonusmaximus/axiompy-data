@@ -65,8 +65,7 @@ class PostgresClient(Client):
                 import adbc_driver_postgresql.dbapi as pg_dbapi
             except ImportError as e:
                 raise ArrowConnectionError(
-                    "adbc-driver-postgresql not installed. "
-                    "Run: pip install adbc-driver-postgresql"
+                    "adbc-driver-postgresql not installed. Run: pip install adbc-driver-postgresql"
                 ) from e
 
             logger.info(

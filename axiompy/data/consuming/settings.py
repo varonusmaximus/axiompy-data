@@ -40,7 +40,9 @@ class SnowflakeArrowSettings:
 
     def __post_init__(self) -> None:
         try:
-            ensure_equal(self.platform, Platform.SNOWFLAKE, "Invalid platform for SnowflakeArrowSettings")
+            ensure_equal(
+                self.platform, Platform.SNOWFLAKE, "Invalid platform for SnowflakeArrowSettings"
+            )
             ensure_not_empty(self.account, "Snowflake account required")
             ensure_not_empty(self.warehouse, "Snowflake warehouse required")
             ensure_not_empty(self.database, "Database required")
@@ -75,7 +77,9 @@ class PostgresArrowSettings:
 
     def __post_init__(self) -> None:
         try:
-            ensure_equal(self.platform, Platform.POSTGRES, "Invalid platform for PostgresArrowSettings")
+            ensure_equal(
+                self.platform, Platform.POSTGRES, "Invalid platform for PostgresArrowSettings"
+            )
             ensure_not_empty(self.host, "Host required")
             ensure_not_empty(self.database, "Database required")
         except ValidationError as e:
