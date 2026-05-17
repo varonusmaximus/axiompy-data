@@ -1,11 +1,15 @@
 """
-Data engineering utilities for axiompy.
+Data engineering utilities for axiompy (axiompy-data distribution).
 
 Provides engine-agnostic data processing utilities with support for multiple
 backends (Pandas, Spark/PySpark, Polars) through abstract interfaces and factory patterns.
 
+Layout: **``consuming``**, **``streaming``**, **``processing``** (quality/lineage/CDC live under **processing**),
+**``observability``** (signal sinks), **interchange** modules at this level (**``dataframe``**, **``export``**,
+**``compression``**), plus **``types``**, **``error``**, **``result``**.
+
 Key Features:
-    - Arrow Database: Arrow-native database abstraction for analytics/ETL
+    - Consuming (analytical DB clients): Arrow-protocol database clients for analytics/ETL
     - Data Quality & Validation: Profile and validate data quality
     - Data Transformation: Common ETL transformation patterns
     - DataFrame Adapters: Unified API across engines
@@ -29,99 +33,79 @@ Usage:
     >>> profiler = DataProfilerFactory.create(DataEngine.SPARK)
     >>> report = profiler.profile(spark_df)
 
-Arrow Database Usage:
+Analytical consuming (bulk columnar clients):
     >>> from axiompy.data import ArrowDatabaseFactory, DuckDBArrowSettings
     >>>
     >>> settings = DuckDBArrowSettings()
     >>> db = ArrowDatabaseFactory.create(settings)
-    >>> table = db.execute_arrow("SELECT * FROM 'data.parquet'")
-    >>> print(f"Fetched {table.num_rows} rows")
+    >>> result = db.query("SELECT * FROM 'data.parquet'")
+    >>> print(f"Fetched {result.row_count} rows")
 """
 
-# Arrow Database
-from axiompy.data.arrow import (
+from __future__ import annotations
+
+from pkgutil import extend_path
+
+__path__ = extend_path(__path__, __name__)
+
+from axiompy.data.compression import DataCompressor
+from axiompy.data.consuming import (
+    AbstractConsumingClientFactory,
     ArrowConnectionError,
     ArrowDatabase,
     ArrowDatabaseError,
     ArrowDatabaseFactory,
     ArrowQueryError,
+    Client,
+    DatabricksArrowSettings,
     DuckDBArrowSettings,
+    Factory,
     MockArrowDatabase,
+    MockClient,
+    Platform,
     PostgresArrowSettings,
+    QueryResult,
+    Settings,
     SnowflakeArrowSettings,
+    convert,
 )
-
-# Batch
-from axiompy.data.batch import (
+from axiompy.data.dataframe import DataFrameAdapter, DataFrameAdapterFactory
+from axiompy.data.export import DataFormat, FormatConverter
+from axiompy.data.processing import (
     BatchProcessor,
     BatchProcessorFactory,
-)
-
-# CDC
-from axiompy.data.cdc import (
     ChangeDetector,
     ChangeDetectorFactory,
     ChangeType,
-)
-
-# Compression
-from axiompy.data.compression import (
-    CompressionFormat,
-    DataCompressor,
-)
-
-# DataFrame
-from axiompy.data.dataframe import (
-    DataFrameAdapter,
-    DataFrameAdapterFactory,
-)
-
-# Export
-from axiompy.data.export import (
-    DataFormat,
-    FormatConverter,
-)
-
-# Lineage
-from axiompy.data.lineage import (
+    DataExpectation,
+    DataPartitioner,
+    DataPartitionerFactory,
+    DataProfiler,
+    DataProfilerFactory,
+    DataQualityReport,
+    DataTransformer,
+    DataTransformerFactory,
     LineageRecord,
     LineageTracker,
     LineageTrackerFactory,
-)
-
-# Partition
-from axiompy.data.partition import (
-    DataPartitioner,
-    DataPartitionerFactory,
     PartitionStrategy,
-)
-
-# Pipeline
-from axiompy.data.pipeline import (
     Pipeline,
     Task,
     TaskStatus,
 )
-
-# Quality
-from axiompy.data.quality import (
-    DataExpectation,
-    DataProfiler,
-    DataProfilerFactory,
-    DataQualityReport,
-)
-
-# Transform
-from axiompy.data.transform import (
-    DataTransformer,
-    DataTransformerFactory,
-)
-from axiompy.data.types import DataEngine
+from axiompy.data.types import CompressionFormat, DataEngine
 
 __all__ = [
     # Types
     "DataEngine",
-    # Arrow Database
+    # Analytical consuming clients
+    "Client",
+    "Factory",
+    "Platform",
+    "QueryResult",
+    "Settings",
+    "convert",
+    "AbstractConsumingClientFactory",
     "ArrowDatabase",
     "ArrowDatabaseFactory",
     "ArrowDatabaseError",
@@ -130,7 +114,9 @@ __all__ = [
     "DuckDBArrowSettings",
     "SnowflakeArrowSettings",
     "PostgresArrowSettings",
+    "DatabricksArrowSettings",
     "MockArrowDatabase",
+    "MockClient",
     # Quality
     "DataProfiler",
     "DataProfilerFactory",
@@ -169,4 +155,4 @@ __all__ = [
     "CompressionFormat",
 ]
 
-__version__ = "0.1.0"
+__version__ = "3.0.0"

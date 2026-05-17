@@ -2,9 +2,13 @@
 
 | Workflow | When | Purpose |
 |----------|------|---------|
-| [`python-ci.yml`](python-ci.yml) | Push/PR to `main` or `develop`, or **workflow_dispatch** | **Ruff** (lint + format on Python 3.11), **pytest + coverage** on **Python 3.12** (80% gate), **Bandit** + **pip-audit** (failing) |
+| [`python-ci.yml`](python-ci.yml) | Push/PR to `main` or `develop`, or **workflow_dispatch** | **Ruff** (lint + format on Python 3.12), **pytest + coverage** on **Python 3.12** (80% gate; **axiompy[fastapi]** from GitHub `main` (PEP 508 direct ref), then `pip install -e ".[dev,test-all]"`), **Bandit** + **pip-audit** |
 
 There is no Artifactory or private PyPI index. Install **`axiompy`** from PyPI before this package, or from Git if core is not yet published (see root [`README.md`](../../README.md)).
+
+## Java (PySpark tests)
+
+The **test** job installs **Temurin 21** via `actions/setup-java` so the full PySpark suite runs on Linux. Locally, use a real JDK (`java -version` must succeed); see root README.
 
 ## Secrets
 
@@ -15,14 +19,16 @@ There is no Artifactory or private PyPI index. Install **`axiompy`** from PyPI b
 ## Local parity
 
 ```bash
-make lint
-make test
-make coverage
-make security
+make ci-local
 ```
 
+Or step by step:
+
 ```bash
-pip install pre-commit
+make lint
+make coverage
+make security
+pip install -e ".[dev]"
 pre-commit install
 pre-commit install --hook-type pre-push
 pre-commit run --all-files

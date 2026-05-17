@@ -731,7 +731,7 @@ Mock implementations for unit testing:
 from unittest.mock import patch
 
 # Mock Kafka producer
-@patch('axiompy.data.streaming.producer.KafkaProducer')
+@patch('axiompy.data.streaming.adapters.kafka.KafkaProducer')
 def test_my_function(mock_kafka):
     mock_producer = MagicMock()
     mock_kafka.return_value = mock_producer

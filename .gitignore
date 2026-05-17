@@ -1,4 +1,6 @@
 .DS_Store
+.venv/
+.cursor/skills/
 __pycache__/
 *.pyc
 *.pyo

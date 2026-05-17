@@ -15,7 +15,7 @@ from axiompy.data.dataframe import (
     DataFrameAdapterFactory,
     PandasDataFrameAdapter,
 )
-from axiompy.data.partition import (
+from axiompy.data.processing.partition import (
     DataPartitionerFactory,
     PandasDataPartitioner,
 )

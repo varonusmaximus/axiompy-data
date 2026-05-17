@@ -8,7 +8,7 @@ import time
 
 import pytest
 
-from axiompy.data.pipeline import Pipeline, Task
+from axiompy.data.processing.pipeline import Pipeline, Task
 from axiompy.data.types import TaskStatus
 
 

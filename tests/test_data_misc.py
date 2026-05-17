@@ -7,13 +7,13 @@ Tests BatchProcessor, FormatConverter, and LineageTracker.
 import pandas as pd
 import pytest
 
-from axiompy.data.batch import (
+from axiompy.data.processing.batch import (
     BatchProcessorFactory,
     ListBatchProcessor,
     PandasBatchProcessor,
 )
 from axiompy.data.export import FormatConverter
-from axiompy.data.lineage import (
+from axiompy.data.processing.lineage import (
     LineageTrackerFactory,
     PandasLineageTracker,
 )
@@ -478,8 +478,8 @@ class TestDataIntegration:
 
     def test_etl_with_lineage_and_quality(self):
         """Test ETL workflow with lineage tracking and quality checks."""
-        from axiompy.data.quality import DataProfilerFactory
-        from axiompy.data.transform import DataTransformerFactory
+        from axiompy.data.processing.quality import DataProfilerFactory
+        from axiompy.data.processing.transform import DataTransformerFactory
 
         # Source data
         raw_df = pd.DataFrame({"id": [1, 2, 3, 3, 5], "value": [10, None, 30, 30, 50]})

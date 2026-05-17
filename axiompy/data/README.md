@@ -1,51 +1,40 @@
+# axiompy.data — Data engineering utilities
 
+Engine-agnostic data utilities for **Pandas**, **Spark**, and optional backends, shipped in the **`axiompy-data`** distribution (namespace `axiompy.data`).
 
-# axiompy.data - Data Engineering Utilities
+| Topic | Document |
+|-------|----------|
+| Package domains & migration notes | [PACKAGE_LAYOUT.md](PACKAGE_LAYOUT.md) |
+| Interchange — `dataframe`, `export`, `compression` (at package root) | [dataframe.py](dataframe.py), [export.py](export.py), [compression.py](compression.py) |
+| `processing` — batch, pipeline, partition, transform, quality, lineage, CDC | [processing/](processing/) |
+| `consuming` — Arrow-style analytical DB clients | [consuming/README.md](consuming/README.md) |
+| `observability` — signal sinks (OTel, Elastic, Splunk HEC, …) | [observability/](observability/) |
+| Streaming (Kafka, Kinesis, Redis, RabbitMQ) | [streaming/README.md](streaming/README.md) |
+| Factory / engine dispatch notes | [FACTORY_AUDIT.md](FACTORY_AUDIT.md) |
+| Repository dev setup | [../../README.md](../../README.md) |
 
-**Engine-agnostic data engineering utilities with support for Pandas, Spark, and Polars.**
+## Features
 
-The `axiompy.data` module provides a comprehensive suite of tools for data engineering workflows, offering a unified API that works seamlessly across local development (Pandas) and distributed production environments (Spark/Databricks).
+- Engine abstraction via factories and `DataEngine`
+- Data quality profiling and expectations
+- ETL transforms, batch processing, partitioning
+- Pipelines, lineage, change data capture
+- Format conversion and compression
+- Real-time streaming adapters
 
----
+## Installation
 
-## 🎯 Key Features
-
-- **🔄 Engine Abstraction**: Write once, run with Pandas or Spark
-- **📊 Data Quality**: Profile and validate data quality metrics
-- **🔧 Transformations**: Common ETL transformation patterns
-- **📦 Batch Processing**: Process large datasets in manageable chunks
-- **🗂️ Partitioning**: Time/hash/range-based data partitioning
-- **🔗 Pipelines**: Build and orchestrate data workflows
-- **📝 Lineage Tracking**: Track data provenance and transformations
-- **🔍 Change Data Capture**: Detect inserts, updates, and deletes
-- **📁 Format Conversion**: Convert between CSV, JSON, Parquet, Excel
-- **🗜️ Compression**: Compress/decompress with multiple formats
-- **🌊 Real-Time Streaming**: Unified interface for Kafka, Kinesis, Redis, RabbitMQ
-
----
-
-## 📦 Installation
+Requires core **`axiompy`** and this wheel:
 
 ```bash
-# Basic installation
-pip install axiompy
-
-# With data engineering support (Pandas)
-pip install "axiompy[data]"
-
-# With Spark support
-pip install "axiompy[spark]"
-
-# With streaming support
-pip install "axiompy[streaming-all]"
-
-# All features
-pip install "axiompy[all]"
+pip install "axiompy>=2,<3"
+pip install "axiompy-data[data]"      # pandas
+pip install "axiompy-data[spark]"     # pyspark
+pip install "axiompy-data[streaming-all]"
+pip install "axiompy-data[test-all]"  # full test stack
 ```
 
----
-
-## 🚀 Quick Start
+## Quick start
 
 ### Auto-Detection (Recommended)
 
@@ -83,7 +72,7 @@ report = profiler.profile(spark_df)
 
 ---
 
-## 📚 Module Documentation
+## Module documentation
 
 ### 1. Data Quality & Validation
 
@@ -392,7 +381,7 @@ upstream = tracker.get_upstream_sources("enriched_users")
 downstream = tracker.get_downstream_targets("raw_users")
 
 # Decorator for automatic tracking
-from axiompy.data.lineage import track_lineage
+from axiompy.data.processing.lineage import track_lineage
 
 @track_lineage("daily_etl", inputs=["raw"], outputs=["processed"])
 def my_etl_job(data):
