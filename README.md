@@ -14,7 +14,7 @@ For local development with sibling checkouts:
 ```bash
 python3.12 -m venv .venv
 source .venv/bin/activate
-pip install -e ../axiompy
+pip install -e "../axiompy[io]"
 pip install -e ".[dev]"
 ```
 
@@ -26,10 +26,10 @@ pip install -e ".[test-all]"
 
 Repository: [https://github.com/varonusmaximus/axiompy-data](https://github.com/varonusmaximus/axiompy-data)
 
-If **`axiompy` is not yet on PyPI**, install it from Git before installing this package:
+If **`axiompy` is not yet on PyPI**, install it from Git before installing this package (`web` is core; `[io]` adds database/HTTP/storage clients):
 
 ```bash
-pip install "axiompy[fastapi] @ git+https://github.com/varonusmaximus/axiompy.git@main"
+pip install "axiompy[io] @ git+https://github.com/varonusmaximus/axiompy.git@main"
 pip install -e ".[dev]"
 ```
 

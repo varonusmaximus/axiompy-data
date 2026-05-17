@@ -52,8 +52,9 @@ jobs:
       - name: Install package and test tools
         run: |
           python -m pip install --upgrade pip
-          # Core axiompy 2.x is not on PyPI yet; [fastapi] satisfies axiompy.__init__ (imports web).
-          pip install "axiompy[fastapi] @ git+https://github.com/varonusmaximus/axiompy.git@main"
+          # Core axiompy 2.x is not on PyPI yet; [io] for axiompy.io (tests use Database, ObjectStorage).
+          # Pin to axiompy branch until varona-core-web-extras is on main.
+          pip install "axiompy[io] @ git+https://github.com/varonusmaximus/axiompy.git@varona-core-web-extras"
           pip install -e ".[dev,test-all]"
 
       - name: Run tests with coverage
@@ -86,7 +87,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install bandit pip-audit
-          pip install "axiompy[fastapi] @ git+https://github.com/varonusmaximus/axiompy.git@main"
+          pip install "axiompy[io] @ git+https://github.com/varonusmaximus/axiompy.git@varona-core-web-extras"
           pip install -e ".[dev,test-all]"
 
       - name: Run Bandit

@@ -19,13 +19,13 @@ help:
 	@echo "  make ci-local          - lint + pre-commit + coverage + security"
 	@echo "  make precommit-install - install pre-commit git hooks"
 	@echo ""
-	@echo "Install: pip install -e ../axiompy && pip install -e \".[dev]\" (or [test-all])"
+	@echo "Install: pip install -e \"../axiompy[io]\" && pip install -e \".[dev]\" (or [test-all])"
 
 venv:
 	@PY=$$(command -v python3.12 || command -v python3); \
 	$$PY -m venv .venv; \
 	./.venv/bin/pip install --upgrade pip; \
-	./.venv/bin/pip install -e ../axiompy 2>/dev/null || true; \
+	./.venv/bin/pip install -e "../axiompy[io]" 2>/dev/null || true; \
 	./.venv/bin/pip install -e ".[dev]"; \
 	$(MAKE) precommit-install
 	@echo "Activate: source .venv/bin/activate"
