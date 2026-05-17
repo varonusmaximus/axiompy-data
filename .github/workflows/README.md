@@ -2,7 +2,7 @@
 
 | Workflow | When | Purpose |
 |----------|------|---------|
-| [`python-ci.yml`](python-ci.yml) | Push/PR to `main` or `develop`, or **workflow_dispatch** | **Ruff** (lint + format on Python 3.12), **pytest + coverage** on **Python 3.12** (80% gate; **axiompy[fastapi]** from GitHub `main` (PEP 508 direct ref), then `pip install -e ".[dev,test-all]"`), **Bandit** + **pip-audit** |
+| [`python-ci.yml`](python-ci.yml) | Push/PR to `main` or `develop`, or **workflow_dispatch** | **Ruff** (lint + format on Python 3.12), **pytest + coverage** on **Python 3.12** (80% gate; **axiompy[io]** from GitHub until core 2.x on PyPI, then `pip install -e ".[dev,test-all]"`), **Bandit** + **pip-audit** |
 
 There is no Artifactory or private PyPI index. Install **`axiompy`** from PyPI before this package, or from Git if core is not yet published (see root [`README.md`](../../README.md)).
 
