@@ -93,7 +93,7 @@ print(f"Issues: {report.issues}")
 expectations = [
     DataExpectation(name="id_not_null", column="id", condition="not_null"),
     DataExpectation(name="id_unique", column="id", condition="unique"),
-    DataExpectation(name="age_range", column="age", condition="in_range", 
+    DataExpectation(name="age_range", column="age", condition="in_range",
                    params={"min": 0, "max": 150}),
     DataExpectation(name="status_valid", column="status", condition="in_set",
                    params={"values": ["active", "inactive"]}),
@@ -188,7 +188,7 @@ df = transformer.deduplicate(df, subset=["user_id"])
 df = transformer.filter_rows(df, "age > 18 and status == 'active'")
 
 # Add computed column
-df = transformer.add_computed_column(df, "full_name", 
+df = transformer.add_computed_column(df, "full_name",
                                     lambda d: d["first_name"] + " " + d["last_name"])
 
 # Cast column type
@@ -216,7 +216,7 @@ from axiompy.io import DatabaseFactory, DatabaseType, DatabaseSettings
 adapter = DataFrameAdapterFactory.create_auto(df)
 
 # Read from database
-db_settings = DatabaseSettings(host="localhost", database="mydb", 
+db_settings = DatabaseSettings(host="localhost", database="mydb",
                                username="user", password="pass")
 db = DatabaseFactory.create(DatabaseType.POSTGRES, db_settings)
 df = adapter.read_table(db, "users", columns=["id", "name"], limit=1000)
@@ -508,7 +508,7 @@ Produce and consume messages from streaming platforms:
 
 ```python
 from axiompy.data.streaming import (
-    StreamProducerFactory, 
+    StreamProducerFactory,
     StreamConsumerFactory,
     StreamHandler
 )
@@ -528,7 +528,7 @@ settings = StreamSettings(
 with StreamProducerFactory.create(settings) as producer:
     # Send single message
     result = producer.send("Hello, Stream!", key="msg-1")
-    
+
     # Send DataFrame
     import pandas as pd
     df = pd.DataFrame({'user_id': [1, 2, 3], 'action': ['login', 'purchase', 'logout']})
@@ -539,7 +539,7 @@ with StreamConsumerFactory.create(settings) as consumer:
     for message in consumer.consume(max_messages=10):
         print(message.value.decode('utf-8'))
         consumer.commit(message)
-    
+
     # Consume to DataFrame
     df = consumer.consume_to_dataframe(max_messages=100, parse_json=True)
 
@@ -552,7 +552,7 @@ class UserEvent:
 
 class UserEventHandler(StreamHandler[UserEvent]):
     """Handler that combines deserialization + processing."""
-    
+
     def deserialize(self, message: StreamMessage) -> Optional[UserEvent]:
         """Deserialize JSON to domain object."""
         import json
@@ -561,11 +561,11 @@ class UserEventHandler(StreamHandler[UserEvent]):
             return UserEvent(**data)
         except Exception:
             return None
-    
+
     def handle(self, event: UserEvent) -> None:
         """Process deserialized event with type safety."""
         save_to_database(event)
-        
+
         if event.amount > 100:
             send_alert(event)
 
@@ -603,7 +603,7 @@ All utilities work seamlessly in Databricks notebooks:
 ```python
 # Databricks Notebook Cell 1: Setup
 from axiompy.data import (
-    DataProfilerFactory, 
+    DataProfilerFactory,
     DataTransformerFactory,
     LineageTrackerFactory,
     DataEngine
@@ -714,7 +714,7 @@ from axiompy.data.types import DataQualityReport
 class MockDataProfiler(DataProfiler):
     def __init__(self):
         super().__init__(DataEngine.PANDAS, {})
-    
+
     def profile(self, data):
         return DataQualityReport(
             row_count=100,
@@ -725,10 +725,10 @@ class MockDataProfiler(DataProfiler):
             statistics={},
             issues=[]
         )
-    
+
     def validate_expectations(self, data, expectations):
         return {"success": True, "passed": len(expectations), "failed": 0}
-    
+
     def check_schema(self, data, expected_schema):
         return {"valid": True, "issues": []}
 
@@ -768,7 +768,7 @@ class CustomProfiler(DataProfiler):
     def profile(self, data):
         # Your custom implementation
         pass
-    
+
     # Implement other abstract methods...
 
 # Register
@@ -815,4 +815,3 @@ df.write.parquet("output")
 ---
 
 **Last Updated:** 2025-12-03
-

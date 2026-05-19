@@ -1161,7 +1161,7 @@ class TestArrowDatabaseIntegration:
             # Aggregate
             result = db.query(
                 """
-                SELECT 
+                SELECT
                     event_type,
                     COUNT(*) as event_count,
                     SUM(COALESCE(amount, 0)) as total_amount
@@ -1206,7 +1206,7 @@ class TestArrowDatabaseIntegration:
             # Join and aggregate
             result = db.query(
                 """
-                SELECT 
+                SELECT
                     u.name,
                     COUNT(o.order_id) as order_count,
                     SUM(o.amount) as total_spent
@@ -1229,7 +1229,7 @@ class TestArrowDatabaseIntegration:
             # Generate 100k rows
             result = db.query(
                 """
-                SELECT 
+                SELECT
                     i as id,
                     'user_' || i as name,
                     random() as score

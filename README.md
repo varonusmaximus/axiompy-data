@@ -16,6 +16,7 @@ python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -e "../axiompy[io]"
 pip install -e ".[dev]"
+axiompy-skills --project
 ```
 
 Use **`[test-all]`** when you need the full integration stack (Spark, Arrow drivers, streaming, cloud mocks):
@@ -31,6 +32,7 @@ If **`axiompy` is not yet on PyPI**, install it from Git before installing this 
 ```bash
 pip install "axiompy[io] @ git+https://github.com/varonusmaximus/axiompy.git@main"
 pip install -e ".[dev]"
+axiompy-skills --project
 ```
 
 ## Local checks
@@ -48,8 +50,8 @@ Optional: `make typecheck` (mypy on `axiompy/`; not run in CI).
 
 PySpark tests need a **real JRE** (macOS `/usr/bin/java` is often a stub). CI uses **Temurin 21** via `actions/setup-java`.
 
-- **macOS (Homebrew):** `brew install openjdk@21` then  
-  `export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"`  
+- **macOS (Homebrew):** `brew install openjdk@21` then
+  `export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"`
   (or set `JAVA_HOME` to the JDK home).
 - **Linux:** install Temurin or OpenJDK 21 and ensure `java -version` succeeds.
 

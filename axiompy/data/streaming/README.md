@@ -53,7 +53,7 @@ with StreamProducerFactory.create(settings) as producer:
     # Send single message
     result = producer.send("Hello, World!", key="msg-1")
     print(f"Sent: {result.success}, Offset: {result.offset}")
-    
+
     # Send batch
     results = producer.send_batch(["msg1", "msg2", "msg3"])
     print(f"Sent {len(results)} messages")
@@ -236,10 +236,10 @@ for message in consumer.consume(max_messages=100, timeout_seconds=30):
     print(f"Value: {message.value.decode('utf-8')}")
     print(f"Offset: {message.offset}")
     print(f"Timestamp: {message.timestamp}")
-    
+
     # Process message
     # ...
-    
+
     # Commit offset
     consumer.commit(message)
 
@@ -270,7 +270,7 @@ def save_to_database(message):
     """Handler function - saves message to database."""
     import json
     from axiompy.io import DatabaseFactory
-    
+
     db = DatabaseFactory.create(...)
     data = json.loads(message.value.decode('utf-8'))
     db.set("events", data)
@@ -309,7 +309,7 @@ class UserEvent:
 # Create handler that combines deserialization + processing
 class JsonUserEventHandler(StreamHandler[UserEvent]):
     """Handler that deserializes JSON messages to UserEvent objects."""
-    
+
     def deserialize(self, message: StreamMessage) -> Optional[UserEvent]:
         """Deserialize JSON message to UserEvent."""
         try:
@@ -323,12 +323,12 @@ class JsonUserEventHandler(StreamHandler[UserEvent]):
         except Exception as e:
             logger.error(f"Failed to deserialize: {e}")
             return None
-    
+
     def handle(self, event: UserEvent) -> None:
         """Process the deserialized event."""
         # Type-safe processing with domain model
         save_to_database(event)
-        
+
         if event.action == "purchase" and event.amount > 100:
             send_high_value_alert(event)
 
@@ -485,10 +485,10 @@ def process_message(message):
     data = json.loads(message.value.decode('utf-8'))
     user_id = data['user_id']
     action = data['action']
-    
+
     if action == "purchase":
         save_purchase(user_id, data['amount'])
-    
+
     # Hard to test, hard to reuse, no type safety
 ```
 
@@ -505,11 +505,11 @@ class PurchaseEventHandler(StreamHandler[PurchaseEvent]):
         except Exception as e:
             logger.error(f"Deserialization failed: {e}")
             return None
-    
+
     def handle(self, event: PurchaseEvent) -> None:
         """Business logic - type-safe and testable"""
         save_purchase(event)
-        
+
         # Type hints give you IDE autocomplete!
         if event.amount > 100:
             send_alert(event.user_id)
@@ -527,7 +527,7 @@ class LoginHandler(StreamHandler[LoginEvent]):
     def deserialize(self, message):
         data = json.loads(message.value.decode('utf-8'))
         return LoginEvent(**data)
-    
+
     def handle(self, event: LoginEvent):
         logger.info(f"User {event.user_id} logged in from {event.ip}")
 
@@ -535,7 +535,7 @@ class PurchaseHandler(StreamHandler[PurchaseEvent]):
     def deserialize(self, message):
         data = json.loads(message.value.decode('utf-8'))
         return PurchaseEvent(**data)
-    
+
     def handle(self, event: PurchaseEvent):
         save_purchase(event)
         update_inventory(event.product_id)
@@ -546,7 +546,7 @@ purchase_handler = PurchaseHandler()
 
 def route_message(message):
     event_type = message.headers.get('event_type')
-    
+
     if event_type == 'login':
         return login_handler.process_message(message)
     elif event_type == 'purchase':
@@ -574,13 +574,13 @@ from axiompy.data.streaming.types import StreamMessage
 def test_purchase_handler_deserialization():
     """Test deserialization logic independently."""
     handler = PurchaseHandler()
-    
+
     message = StreamMessage(
         value=json.dumps({"user_id": 1, "amount": 99.99}).encode()
     )
-    
+
     event = handler.deserialize(message)
-    
+
     assert event is not None
     assert event.user_id == 1
     assert event.amount == 99.99
@@ -588,11 +588,11 @@ def test_purchase_handler_deserialization():
 def test_purchase_handler_processing():
     """Test business logic with mock events."""
     handler = PurchaseHandler()
-    
+
     event = PurchaseEvent(user_id=1, product_id=42, amount=150.00)
-    
+
     handler.handle(event)
-    
+
     # Verify side effects
     assert_purchase_saved(event)
     assert_inventory_updated(event.product_id)
@@ -600,11 +600,11 @@ def test_purchase_handler_processing():
 def test_purchase_handler_invalid_json():
     """Test error handling."""
     handler = PurchaseHandler()
-    
+
     message = StreamMessage(value=b"invalid json")
-    
+
     event = handler.deserialize(message)
-    
+
     assert event is None  # Should return None on error
 ```
 
@@ -623,7 +623,7 @@ for message in kafka_consumer.consume(max_messages=1000):
     # Parse and transform
     data = json.loads(message.value)
     transformed = transform_data(data)
-    
+
     # Send to output stream
     kinesis_producer.send(
         json.dumps(transformed),
@@ -695,10 +695,10 @@ from axiompy.data.streaming import StreamProducerFactory
 try:
     producer = StreamProducerFactory.create(settings)
     result = producer.send("message")
-    
+
     if not result.success:
         print(f"Failed to send: {result.error}")
-    
+
 except Exception as e:
     print(f"Producer error: {e}")
 finally:
@@ -735,12 +735,12 @@ from unittest.mock import patch
 def test_my_function(mock_kafka):
     mock_producer = MagicMock()
     mock_kafka.return_value = mock_producer
-    
+
     # Test your code
     settings = StreamSettings(...)
     producer = StreamProducerFactory.create(settings)
     result = producer.send("test")
-    
+
     assert result.success
 ```
 
@@ -839,4 +839,3 @@ pip install pika           # For RabbitMQ
 ---
 
 **Last Updated:** 2025-12-03
-
