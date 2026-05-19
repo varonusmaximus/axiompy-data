@@ -16,6 +16,8 @@ Sibling checkout:
 
 ```bash
 pip install -e "../axiompy[io]"
+pip install -e ".[dev]"
+axiompy-skills --project
 ```
 
-After the axiompy extras PR merges, point CI at `@main` instead of `@varona-core-web-extras`.
+CI installs from `@main` until core 2.x is published on PyPI.

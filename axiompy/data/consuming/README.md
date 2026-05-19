@@ -18,7 +18,7 @@ The `axiompy.data.consuming` module provides an abstraction optimized for **bulk
 ### Use Cases
 
 - ✅ **Data Migration**: Bulk transfer between databases
-- ✅ **Analytics Queries**: Large result sets for analysis  
+- ✅ **Analytics Queries**: Large result sets for analysis
 - ✅ **ETL Pipelines**: Columnar processing with DuckDB/Polars/Spark
 - ✅ **Data Quality**: Bulk validation on large datasets
 
@@ -31,7 +31,7 @@ pip install duckdb pyarrow
 # Snowflake support
 pip install adbc-driver-snowflake
 
-# PostgreSQL support  
+# PostgreSQL support
 pip install adbc-driver-postgresql
 
 # Optional: DataFrame integration
@@ -267,7 +267,7 @@ duckdb_settings = DuckDBArrowSettings()
 local_db = ArrowDatabaseFactory.create(duckdb_settings)
 local_db.register_table("events", source_data)
 transformed = local_db.query("""
-    SELECT 
+    SELECT
         event_type,
         COUNT(*) as event_count,
         AVG(duration_ms) as avg_duration
@@ -372,4 +372,3 @@ base.py, settings.py, errors.py  ← No internal imports!
 
 - `examples/arrow_database_examples.py` - Comprehensive examples
 - `tests/test_arrow_database.py` - Unit tests
-
